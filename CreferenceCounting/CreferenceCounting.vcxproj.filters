@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="referenceCounting.c">
+    <ClCompile Include="cosineSimilarity.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

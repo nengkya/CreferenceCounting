@@ -1,5 +1,6 @@
 #include <stddef.h> /*size_t*/
 #include <stdlib.h> /*malloc();*/
+#include <stdio.h>
 
 
 typedef void (* deallocator)(void *);
@@ -42,6 +43,18 @@ static void * rc_malloc(size_t size, deallocator free) { /*void * require return
 
 static void print_free(void * p) {
 
+	int * ip = p;
+
+	printf("freeing %d\n", * ip);
+
+}
+
+
+static void * incref(void * p) {
+
+	if (!p) return p;
+
+
 }
 
 
@@ -53,5 +66,14 @@ int main() {
 	*/
 
 	int * p = rc_malloc(sizeof * p, print_free);
+
+	/*
+	Assigning 42 ensures there’s a visible, meaningful value stored in the memory that can be observed when it is eventually freed.
+	Ensures that the allocated memory contains a meaningful value (42) that can be printed during deallocation,
+	making the behavior of the program more observable and meaningful in this example.
+	*/
+	* p = 42;
+
+	int * p2 = incref(p);
 
 }
