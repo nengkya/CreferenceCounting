@@ -1,3 +1,5 @@
+https://mailund.dk/posts/c-refcount-list/  
+  
 ``` ```  
                                      sigma(a[i] * b[i])  
 cosineSimilarity(a, b) = ---------------------------------------------------------  
