@@ -16,8 +16,17 @@ void * rc_malloc(size_t size, deallocator free) {
 	*/
 	struct refcount * p = (struct refcount *)malloc(sizeof(struct refcount) + size);
 
+	/*suppressed warning about possibility derefenrencing nullptr*/
+	if (p) * p = (struct refcount){.count = 1, .free = free};
 
+	/*
+	p + 1 increments p by 1 unit of the size of struct refcount,
+	effectively moving the pointer past the metadata portion of the memory.
+	*/
+	return p + 1;
 
+	/*suppressed warning: control reaches end of non-void function [-Wreturn-type] }*/
+	return 0;
 
 }
 
