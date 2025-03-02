@@ -22,6 +22,19 @@ void * rc_malloc(size_t size, deallocator free) {
 	/*
 	p + 1 increments p by 1 unit of the size of struct refcount,
 	effectively moving the pointer past the metadata portion of the memory.
+	
+	1. separation metadata from user data
+		a. The allocated memory block includes both :
+			1. metadata (struct refcount) : used internally by the memory management system
+			2. user data : the memory requested by the caller.
+		b. by returning (p + 1) the user only sees the memory intended for their use,
+			and they remain unaware of the metadata
+	
+	2. encapsulation
+		a. this design encapsulates the reference-counting mechanism,
+			preventing the caller from accidentally modifying the metadata
+		b. the caller interacts only with the memory they requested,
+			without worrying about how the reference count is managed
 	*/
 	return p + 1;
 
@@ -40,6 +53,16 @@ void print_free(void * p) {
 }
 
 
+void * incref(void * p) {
+
+	if (!p) return p
+
+
+
+
+}
+
+
 int main() {
 
 	/*
@@ -50,8 +73,29 @@ int main() {
 
 	int * p = rc_malloc(sizeof * p, print_free);
 
+	/*
+	assigning 42 ensures there is a visible, meaningful value stored in the memory
+	that can be observe when it is eventually freed
+
+	ensures that the allocated memory contain a meaningful value (42) that can be printed during deallocation,
+	making the behavior of the program more observable and meaningful in this example
+	*/
+	* p = 42;
+
+	int * p2 = incref(p);
+
+
+
+
+
+
 
 
 
 
 }
+
+
+
+
+
