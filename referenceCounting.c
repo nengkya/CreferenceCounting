@@ -55,10 +55,21 @@ void print_free(void * p) {
 
 void * incref(void * p) {
 
-	if (!p) return p
+	/*
+	1. check if p is NULL
+		if (!p) is a shorthand for if (NULL == p), meaning "if p is NULL, then ..."
+	
+	2. return NULL if p is NULL
+		return p; effectively returns NULL, ensuring that if a NULL pointer is passed to incref();,
+		it will return NULL without attempting any further operations
+	*/
+	if (!p) return p;
 
+	struct refcount * rc = (struct refcount *)p - 1;
 
+	rc->count++;
 
+	return rc + 1;
 
 }
 
